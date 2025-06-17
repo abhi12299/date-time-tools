@@ -1,22 +1,30 @@
 {
-  "name": "date-time-tools",
+  "name": "@abhi12299/date-time-tools",
   "version": "0.0.1",
   "description": "A Model Context Protocol (MCP) server for date-time manipulation and timezone conversion.",
+  "keywords": [],
+  "homepage": "https://github.com/abhi12299/date-time-tools#readme",
+  "bugs": {
+    "url": "https://github.com/abhi12299/date-time-tools/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhi12299/date-time-tools.git"
+  },
+  "license": "ISC",
+  "author": "Abhishek Mehandiratta",
   "type": "module",
   "main": "mcp.js",
   "bin": {
     "date-time-tools": "mcp.js"
+  },
+  "scripts": {
+    "start": "node mcp.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.3",
     "luxon": "^3.6.1",
     "zod": "^3.25.64"
   },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node mcp.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {}
 }
