@@ -1,6 +1,6 @@
 {
   "name": "@abhi12299/date-time-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Model Context Protocol (MCP) server for date-time manipulation and timezone conversion.",
   "keywords": [],
   "homepage": "https://github.com/abhi12299/date-time-tools#readme",

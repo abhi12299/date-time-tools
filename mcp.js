@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import fs from "fs";
-
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -11,12 +9,10 @@ import { currentDateTimeAndTz } from "./actions/current_datetime_tz.js";
 
 import { DATE_FORMAT, EXAMPLE_VALID_DATE_TIME } from "./constants.js";
 
-const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf8"));
-
 // Create an MCP server
 const server = new McpServer({
   name: "Date-time tools",
-  version: packageJson.version
+  version: "0.0.4"
 });
 
 // Add a tool to convert a date time string from one timezone to another
