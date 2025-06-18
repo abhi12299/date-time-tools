@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import fs from "fs";
+
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -9,10 +11,12 @@ import { currentDateTimeAndTz } from "./actions/current_datetime_tz.js";
 
 import { DATE_FORMAT, EXAMPLE_VALID_DATE_TIME } from "./constants.js";
 
+const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+
 // Create an MCP server
 const server = new McpServer({
   name: "Date-time tools",
-  version: "1.0.0"
+  version: packageJson.version
 });
 
 // Add a tool to convert a date time string from one timezone to another
@@ -38,7 +42,7 @@ server.tool("mutateDate",
   `Mutates a date time string by adding or subtracting days, hours, minutes, months, or years.
 - The date time string must follow luxon date-time format: ${DATE_FORMAT}. Example: ${EXAMPLE_VALID_DATE_TIME}.
 - The update object must be a valid update object. Example: { days: -1, hours: 2, minutes: 3, months: 4, years: 5 }.
-- You must first invoke the tool named "currentDateTimeAndTimezone" to get the current date, time and timezone of the user if they don't specify the date or time explicitly.
+- You must first invoke the tool named "currentDateTimeAndTimezone" to get the current date, time and timezone of the user if they don't specify an absolute date or time explicitly (today/tomorrow/yesterday/next week/next month/next year etc. is not absolute date or time).
 `,
   {
     dateTime: z.string().describe(`The date time string to mutate. Must follow luxon date-time format: ${DATE_FORMAT}. Example: ${EXAMPLE_VALID_DATE_TIME}`),
