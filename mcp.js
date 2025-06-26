@@ -12,7 +12,7 @@ import { DATE_FORMAT, EXAMPLE_VALID_DATE_TIME } from "./constants.js";
 // Create an MCP server
 const server = new McpServer({
   name: "Date-time tools",
-  version: "0.0.4"
+  version: "0.0.5"
 });
 
 // Add a tool to convert a date time string from one timezone to another
