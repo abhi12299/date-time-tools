@@ -8,9 +8,22 @@ This MCP server provides a set of tools for working with date-time strings, incl
 
 ## Integration with Cursor and Other MCP Clients
 
-Go to: `Settings -> Cursor Settings -> MCP -> Add new global MCP server`
+**For Cursor:** Go to: `Settings -> Cursor Settings -> MCP -> Add new global MCP server`
 
 Pasting the following configuration into your Cursor `~/.cursor/mcp.json` file is the recommended approach. You may also install in a specific project by creating `.cursor/mcp.json` in your project folder. See [Cursor MCP docs](https://docs.cursor.com/context/model-context-protocol) for more info.
+
+```json
+{
+  "mcpServers": {
+    "date-time-tools": {
+      "command": "npx",
+      "args": ["-y", "@abhi12299/date-time-tools"]
+    }
+  }
+}
+```
+
+**For Claude Desktop:** Add this to your Claude Desktop `claude_desktop_config.json` file. See [Claude Desktop MCP docs](https://modelcontextprotocol.io/quickstart/user) for more info.
 
 ```json
 {
