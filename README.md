@@ -6,6 +6,8 @@ A Model Context Protocol (MCP) server for date-time manipulation and timezone co
 
 This MCP server provides a set of tools for working with date-time strings, including timezone conversion, date mutation (arithmetic), and fetching the current date-time and timezone. It is designed to be used as a backend utility for applications or agents that need robust, standardized date-time operations.
 
+**Live deployment:** <https://date-time-tools.iabhishek.workers.dev/mcp>
+
 ## Architecture
 
 This server runs on **Cloudflare Workers** and uses the [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport (with a legacy SSE endpoint also exposed). Per-session state is backed by a Durable Object via Cloudflare's [`agents`](https://www.npmjs.com/package/agents) `McpAgent` wrapper.
@@ -38,7 +40,7 @@ Deploy:
 npm run deploy
 ```
 
-Wrangler prints the public URL, e.g. `https://date-time-tools.<your-subdomain>.workers.dev/mcp`. The Workers Free plan covers this server (100k requests/day; Durable Objects free tier covers session storage).
+Wrangler prints the public URL — for this project it's `https://date-time-tools.iabhishek.workers.dev/mcp`. The Workers Free plan covers this server (100k requests/day; Durable Objects free tier covers session storage).
 
 ### Automated (GitHub Actions)
 
@@ -49,13 +51,13 @@ Wrangler prints the public URL, e.g. `https://date-time-tools.<your-subdomain>.w
 
 ## Integration with MCP Clients
 
-Configure clients that support Streamable HTTP transports to point at the deployed (or local) URL:
+Configure clients that support Streamable HTTP transports to point at the deployed URL:
 
 ```json
 {
   "mcpServers": {
     "date-time-tools": {
-      "url": "https://date-time-tools.<your-subdomain>.workers.dev/mcp"
+      "url": "https://date-time-tools.iabhishek.workers.dev/mcp"
     }
   }
 }
@@ -68,7 +70,7 @@ For clients that only speak stdio, bridge with [`mcp-remote`](https://www.npmjs.
   "mcpServers": {
     "date-time-tools": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://date-time-tools.<your-subdomain>.workers.dev/mcp"]
+      "args": ["-y", "mcp-remote", "https://date-time-tools.iabhishek.workers.dev/mcp"]
     }
   }
 }
