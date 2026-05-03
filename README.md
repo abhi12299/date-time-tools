@@ -6,31 +6,60 @@ A Model Context Protocol (MCP) server for date-time manipulation and timezone co
 
 This MCP server provides a set of tools for working with date-time strings, including timezone conversion, date mutation (arithmetic), and fetching the current date-time and timezone. It is designed to be used as a backend utility for applications or agents that need robust, standardized date-time operations.
 
-## Integration with Cursor and Other MCP Clients
+## Architecture
 
-**For Cursor:** Go to: `Settings -> Cursor Settings -> MCP -> Add new global MCP server`
+This server runs on **Cloudflare Workers** and uses the [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) transport (with a legacy SSE endpoint also exposed). Per-session state is backed by a Durable Object via Cloudflare's [`agents`](https://www.npmjs.com/package/agents) `McpAgent` wrapper.
 
-Pasting the following configuration into your Cursor `~/.cursor/mcp.json` file is the recommended approach. You may also install in a specific project by creating `.cursor/mcp.json` in your project folder. See [Cursor MCP docs](https://docs.cursor.com/context/model-context-protocol) for more info.
+Endpoints:
+
+- `POST/GET/DELETE /mcp` — Streamable HTTP transport. Sessions tracked via the `mcp-session-id` header.
+- `GET /sse`, `POST /sse/message` — Legacy SSE transport for older clients.
+
+## Local development
+
+```bash
+npm install
+npm run dev   # wrangler dev — serves at http://127.0.0.1:8787/mcp
+```
+
+## Deploying to Cloudflare
+
+One-time setup:
+
+```bash
+npx wrangler login
+```
+
+Deploy:
+
+```bash
+npm run deploy
+```
+
+Wrangler prints the public URL, e.g. `https://date-time-tools.<your-subdomain>.workers.dev/mcp`. The Workers Free plan covers this server (100k requests/day; Durable Objects free tier covers session storage).
+
+## Integration with MCP Clients
+
+Configure clients that support Streamable HTTP transports to point at the deployed (or local) URL:
 
 ```json
 {
   "mcpServers": {
     "date-time-tools": {
-      "command": "npx",
-      "args": ["-y", "@abhi12299/date-time-tools"]
+      "url": "https://date-time-tools.<your-subdomain>.workers.dev/mcp"
     }
   }
 }
 ```
 
-**For Claude Desktop:** Add this to your Claude Desktop `claude_desktop_config.json` file. See [Claude Desktop MCP docs](https://modelcontextprotocol.io/quickstart/user) for more info.
+For clients that only speak stdio, bridge with [`mcp-remote`](https://www.npmjs.com/package/mcp-remote):
 
 ```json
 {
   "mcpServers": {
     "date-time-tools": {
       "command": "npx",
-      "args": ["-y", "@abhi12299/date-time-tools"]
+      "args": ["-y", "mcp-remote", "https://date-time-tools.<your-subdomain>.workers.dev/mcp"]
     }
   }
 }
@@ -50,11 +79,13 @@ This MCP server provides the following tools for LLMs:
 
 ### 🧪 Testing with MCP Inspector
 
-You can test this MCP server using the official MCP Inspector:
+Run `npm run dev`, then in another terminal:
 
 ```bash
-npx -y @modelcontextprotocol/inspector node mcp.js
+npx -y @modelcontextprotocol/inspector
 ```
+
+Select the **Streamable HTTP** transport and use `http://127.0.0.1:8787/mcp` as the URL.
 
 ---
 
