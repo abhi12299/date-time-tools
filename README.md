@@ -24,6 +24,8 @@ npm run dev   # wrangler dev — serves at http://127.0.0.1:8787/mcp
 
 ## Deploying to Cloudflare
 
+### Manual
+
 One-time setup:
 
 ```bash
@@ -37,6 +39,13 @@ npm run deploy
 ```
 
 Wrangler prints the public URL, e.g. `https://date-time-tools.<your-subdomain>.workers.dev/mcp`. The Workers Free plan covers this server (100k requests/day; Durable Objects free tier covers session storage).
+
+### Automated (GitHub Actions)
+
+`.github/workflows/deploy.yml` deploys on every push to `main` (and on manual `workflow_dispatch`). Configure two repository secrets:
+
+- `CLOUDFLARE_API_TOKEN` — create at <https://dash.cloudflare.com/profile/api-tokens> using the **Edit Cloudflare Workers** template
+- `CLOUDFLARE_ACCOUNT_ID` — found on the Workers & Pages dashboard sidebar
 
 ## Integration with MCP Clients
 
