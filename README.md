@@ -51,6 +51,16 @@ Wrangler prints the public URL — for this project it's `https://date-time-tool
 
 ## Integration with MCP Clients
 
+### Claude Code
+
+```bash
+claude mcp add date-time-tools --transport http https://date-time-tools.iabhishek.workers.dev/mcp
+```
+
+Add `--scope user` to register it for every project, or `--scope project` to commit a `.mcp.json` shared with collaborators. Verify with `claude mcp list`; inside Claude Code, run `/mcp` to inspect status and tools.
+
+### Generic Streamable HTTP clients
+
 Configure clients that support Streamable HTTP transports to point at the deployed URL:
 
 ```json
