@@ -10,16 +10,20 @@ import { isValidZone } from "../utils.js";
  * @returns {string} - The converted date time string
  */
 export const convertTimezones = (dateTime, fromZone, toZone) => {
+  if (!isValidZone(fromZone)) {
+    return `Invalid timezone: ${fromZone}. Must be a valid IANA timezone. Example: Asia/Kolkata`
+  }
+
+  if (!isValidZone(toZone)) {
+    return `Invalid timezone: ${toZone}. Must be a valid IANA timezone. Example: Asia/Kolkata`
+  }
+
   const zonedDateTime = DateTime.fromFormat(dateTime, DATE_FORMAT, {
     zone: fromZone
   });
 
   if (!zonedDateTime.isValid) {
     return `Invalid date time string: ${dateTime}. Must follow format: ${EXAMPLE_VALID_DATE_TIME}`
-  }
-
-  if (!isValidZone(toZone)) {
-    return `Invalid timezone: ${toZone}. Must be a valid IANA timezone. Example: Asia/Kolkata`
   }
 
   const convertedDateTime = zonedDateTime.setZone(toZone);
