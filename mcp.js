@@ -79,6 +79,13 @@ export default {
       return new Response("Not found", { status: 404 });
     }
 
+    if (request.method !== "POST") {
+      return new Response("Method Not Allowed", {
+        status: 405,
+        headers: { Allow: "POST" },
+      });
+    }
+
     const server = buildServer();
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
