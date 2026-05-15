@@ -12,16 +12,12 @@
     {
       "tag": "v1",
       "new_sqlite_classes": ["DateTimeMCP"]
+    },
+    {
+      "tag": "v2",
+      "deleted_classes": ["DateTimeMCP"]
     }
   ],
-  "durable_objects": {
-    "bindings": [
-      {
-        "class_name": "DateTimeMCP",
-        "name": "MCP_OBJECT"
-      }
-    ]
-  },
   "observability": {
     "enabled": true
   }
